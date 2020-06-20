@@ -1,0 +1,51 @@
+# Required minimum dip version
+version: "4.1"
+
+environment:
+  COMPOSE_EXT: development
+
+compose:
+  files:
+    - docker-compose.yml
+  project_name: hivebrite-backend-test
+
+interaction:
+  bash:
+    description: Open the Bash shell in app's container
+    service: app
+    command: bash
+    compose:
+      run_options: [no-deps]
+
+  bundle:
+    description: Run Bundler commands
+    service: app
+    command: bundle
+
+  rake:
+    description: Run Rake commands
+    service: app
+    command: bundle exec rake
+
+  rspec:
+    description: Run Rspec commands
+    service: app
+    environment:
+      RAILS_ENV: test
+    command: bundle exec rspec
+
+  rails:
+    description: Run Rails commands
+    service: app
+    command: bundle exec rails
+    subcommands:
+      s:
+        description: Run Rails server at http://localhost:3000
+        service: rails
+        compose:
+          run_options: [service-ports, use-aliases]
+
+provision:
+  - dip compose down --volumes
+  - docker-compose up -d --build app
+  - dip bash -c ./bin/setup
