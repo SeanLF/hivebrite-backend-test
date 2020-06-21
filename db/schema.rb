@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_231014) do
+ActiveRecord::Schema.define(version: 2020_06_21_232638) do
+
+  create_table "user_attributes", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "data_type", null: false
+    t.boolean "required_on_signup", default: false, null: false
+    t.boolean "required_on_profile", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index "lower(name)", name: "index_user_attributes_on_lower_name", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.text "username", null: false
