@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_232638) do
+ActiveRecord::Schema.define(version: 2020_06_21_235006) do
+
+  create_table "user_attribute_values", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "user_attribute_id", null: false
+    t.text "value", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_attribute_id"], name: "index_user_attribute_values_on_user_attribute_id"
+    t.index ["user_id", "user_attribute_id"], name: "index_user_attribute_values_on_user_id_and_user_attribute_id", unique: true
+    t.index ["user_id"], name: "index_user_attribute_values_on_user_id"
+  end
 
   create_table "user_attributes", force: :cascade do |t|
     t.string "name", null: false
@@ -31,4 +42,6 @@ ActiveRecord::Schema.define(version: 2020_06_21_232638) do
     t.index "lower(username)", name: "index_users_on_lower_username", unique: true
   end
 
+  add_foreign_key "user_attribute_values", "user_attributes"
+  add_foreign_key "user_attribute_values", "users"
 end
