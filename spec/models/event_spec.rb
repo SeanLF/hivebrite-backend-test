@@ -25,4 +25,9 @@ RSpec.describe Event, type: :model do
       expect(Event.new(name: 'name', custom_attributes: { name: nil, 'another' => '2' }).valid?).to eq(false)
     end
   end
+
+  describe 'Associations' do
+    it { should have_many(:event_registrations) }
+    it { should have_many(:users).through(:event_registrations) }
+  end
 end
