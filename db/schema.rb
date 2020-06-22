@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_235006) do
+ActiveRecord::Schema.define(version: 2020_06_22_001101) do
+
+  create_table "events", force: :cascade do |t|
+    t.string "name", null: false
+    t.json "custom_attributes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "user_attribute_values", force: :cascade do |t|
     t.integer "user_id", null: false
