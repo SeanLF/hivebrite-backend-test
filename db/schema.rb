@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_22_003040) do
+ActiveRecord::Schema.define(version: 2020_06_24_221752) do
+
+  create_table "event_registration_attribute_values", force: :cascade do |t|
+    t.integer "event_registration_id", null: false
+    t.integer "event_registration_attribute_id", null: false
+    t.string "value", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_registration_attribute_id"], name: "index_event_registration_attribute_values_on_event_reg_attr_id"
+    t.index ["event_registration_id", "event_registration_attribute_id"], name: "index_event_registration_attribute_values_on_uniq_att_per_ureg", unique: true
+    t.index ["event_registration_id"], name: "index_event_registration_attribute_values_on_event_regist_id"
+  end
 
   create_table "event_registration_attributes", force: :cascade do |t|
     t.integer "event_id", null: false
@@ -70,6 +81,8 @@ ActiveRecord::Schema.define(version: 2020_06_22_003040) do
     t.index "lower(username)", name: "index_users_on_lower_username", unique: true
   end
 
+  add_foreign_key "event_registration_attribute_values", "event_registration_attributes"
+  add_foreign_key "event_registration_attribute_values", "event_registrations"
   add_foreign_key "event_registration_attributes", "events"
   add_foreign_key "event_registrations", "events"
   add_foreign_key "event_registrations", "users"
