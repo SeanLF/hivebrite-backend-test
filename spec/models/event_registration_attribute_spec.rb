@@ -8,6 +8,7 @@ RSpec.describe EventRegistrationAttribute, type: :model do
 
   describe 'Associations' do
     it { should belong_to(:event) }
+    it { should have_many(:event_registration_attribute_values) }
   end
 
   describe 'Validations' do
